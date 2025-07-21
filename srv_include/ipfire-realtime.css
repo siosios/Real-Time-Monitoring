@@ -1,0 +1,103 @@
+/* Real-Time Tables (Connections, Firewalllogs etc.) */
+/* File/path: /srv/web/ipfire/html/include/ipfire-realtime.css */
+
+
+.tbl, .tbl thead, .tbl tbody, .bigbox {
+    width: 100% !important;
+}
+.tbl td, .tbl th {
+    text-align: center;
+    padding: 2px 8px;
+    white-space: nowrap;
+    font-size: 1em;
+}
+.tbl td:first-child {
+    text-align: left;
+}
+.bigbox {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Table sorting header icons & cursor */
+th[data-sort] {
+    cursor: pointer;
+    position: relative;
+    padding-right: 20px;
+}
+th[data-sort].sort-up::after {
+    content: "\2191";
+    position: absolute;
+    right: 5px;
+    font-size: 16px;
+    color: #ffffff;
+}
+th[data-sort].sort-down::after {
+    content: "\2193";
+    position: absolute;
+    right: 5px;
+    font-size: 16px;
+    color: #ffffff;
+}
+th[data-sort].sort-none::after {
+    content: "\2022";
+    position: absolute;
+    right: 5px;
+    font-size: 16px;
+    color: #ffffff;
+}
+th[data-sort]:hover::after {
+    color: #ffffff;
+}
+
+/* White links on colored table cells */
+.tbl td a, .tbl td a:visited, .tbl td a:active {
+    color: #fff !important;
+    text-decoration: underline;
+    /* If you DON'T want underlines, remove the above line */
+}
+
+/* On colored <td> or table backgrounds, ensure text is clear */
+.tbl td {
+    /* legacy: color:#fff;  -- NOT SET here, only Link is forced white */
+}
+
+/* Style for country flag icons (optional, for better alignment) */
+.tbl td img[alt][src*="/images/flags/"] {
+    vertical-align: middle;
+    margin: 0 2px;
+    /* Optional: width/height adjustments */
+}
+
+/* Search fields and error messages */
+.search_fields { display: none; }
+#error_msg {
+    color: red;
+    margin-top: 10px;
+    display: none;
+}
+
+/* Responsive handling (optional): allows scrolling for small screens */
+/*
+.tbl {
+    overflow-x: auto;
+    display: block;
+    max-width: 100vw;
+}
+*/
+
+/* Optional: Zebra striping for better readability */
+/*
+.tbl tbody tr:nth-child(even) {
+    background: #f7f7f7;
+}
+*/
+
+/* Filter input tweaks (optional, for touch devices) */
+.filter-field {
+    font-size: 1em;
+    padding: 3px;
+    margin: 2px;
+}
+
