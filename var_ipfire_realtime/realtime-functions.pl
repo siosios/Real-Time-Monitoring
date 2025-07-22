@@ -3,9 +3,9 @@
 # File and path: /var/ipfire/realtime/realtime-functions.pl                    #
 # Purpose: Provides core functions for real-time data processing in the IPFire #
 #          Web UI, acting as a dispatcher for data types like connections      #
-# Version: 1.0.0                                                               #
-# Author: IPFire Team <info@ipfire.org>                                        #
-# Copyright: (C) 2007-2025 IPFire Team                                         #
+# Version: 0.8                                                                 #
+# Author: ummeegge                                                             #
+#                                                                              #
 # License: GNU General Public License, version 3 or later                      #
 # Last Modified: July 21, 2025                                                 #
 ################################################################################
@@ -44,9 +44,8 @@ sub debug {
 # Include JavaScript files for the Web UI frontend
 sub include_realtime_script {
     debug(1, "Including JavaScript for realtime frontend"); # Log JavaScript inclusion
-    return <<END; # Return HTML script tags for jQuery and ipfire-realtime.js
-<script type="text/javascript" src="/include/jquery.js"></script>
-<script type="text/javascript" src="/include/ipfire-realtime.js"></script>
+    return <<END; # Return HTML script tags for ipfire-realtime.js
+    <script type="text/javascript" src="/include/ipfire-realtime.js"></script>
 END
 }
 
