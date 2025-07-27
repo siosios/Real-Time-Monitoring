@@ -1,4 +1,4 @@
-# IPFire Real-Time Connection Tracking Module
+# IPFire Real-Time Monitoring Module
 
 This repository introduces a modular, extensible module for the IPFire firewall, replacing the legacy `connections.cgi` with a modernized architecture for real-time network connection monitoring in the WUI. It provides a user-friendly interface with zone-based coloring, dynamic filtering, and sorting, designed to integrate seamlessly with IPFire's infrastructure and support future real-time features.
 
@@ -8,8 +8,8 @@ The previous implementation relied on the `connections.cgi` script, which combin
 
 ## Features
 
-- **Real-Time Connection Monitoring**: Displays active network connections with details like protocol, source/destination IPs, ports, traffic (bytes in/out), connection state, and country flags.
-- **Zone-Based Visualization**: Assigns colors to network zones (e.g., LAN, INTERNET, DMZ) for intuitive identification.
+- **Real-Time Connection Monitoring**: Displays active network connections with details like protocol, source/destination IPs, source/destination ports, traffic (bytes in/out), connection state, and country flags.
+- **Zone-Based Visualization**: Assigns IPFire colors to all enabled network zones (e.g., LAN, INTERNET, DMZ, OpenVPN, Wireguard) for intuitive identification.
 - **Dynamic Filtering and Sorting**: Supports client-side filtering by IP, port, protocol, and zones, with sortable tables and configurable auto-refresh.
 - **Modular Architecture**: Introduces `/var/ipfire/realtime` for reusable Perl modules, simplifying maintenance and enabling other real-time features.
 - **Reusable Frontend**: Provides a flexible JavaScript framework (`ipfire-realtime.js`) adaptable for other data displays.
@@ -28,19 +28,19 @@ The previous implementation relied on the `connections.cgi` script, which combin
 
 The module introduces a new `/var/ipfire/realtime` directory to organize modular Perl components (`.pm` files), simplifying maintenance and enabling reuse for other IPFire real-time features.
 
-- **`connections-realtime.cgi` (13K, Jul 21 14:50)**: Backend CGI script that generates the WebUI and serves JSON data for AJAX-based updates. Handles input sanitization and zone-based filtering, significantly refactored from the legacy version.
-- **`connections.pm` (5.9K, Jul 21 14:51)**: Perl module (`Realtime::Connections`) in `/var/ipfire/realtime` to fetch and filter conntrack data, integrating with IPFire's conntrack system for zone-based coloring and filtering.
-- **`zoneutils.pm` (6.5K, Jul 20 12:44)**: Perl module (`Realtime::ZoneUtils`) in `/var/ipfire/realtime` for centralized IP-to-zone mapping with color assignment and caching, reducing lookup times for large connection tables.
-- **`realtime-functions.pl` (4.1K, Jul 21 15:10)**: Perl module (`Realtime`) in `/var/ipfire/realtime`, acting as a central dispatcher for real-time data processing, routing requests to handlers and including JavaScript for the frontend.
-- **`ipfire-realtime.js` (16K, Jul 21 16:09)**: Reusable JavaScript in `/srv/web/ipfire/html/include` for dynamic table rendering, supporting client-side sorting, filtering, auto-refresh, and expandable process details, adaptable for other real-time features. Built with Vanilla JavaScript for improved performance and no external dependencies.
-- **`ipfire-realtime.css` (2.1K, Jul 21 14:50)**: CSS for styling WebUI tables in `/srv/web/ipfire/html/include`, including sort indicators, responsive search fields, and flag icon alignment, customizable for future extensions.
+- **`connections-realtime.cgi`**: Backend CGI script that generates the WebUI and serves JSON data for AJAX-based updates. Handles input sanitization and zone-based filtering, significantly refactored from the legacy version.
+- **`connections.pm`**: Perl module (`Realtime::Connections`) in `/var/ipfire/realtime` to fetch and filter conntrack data, integrating with IPFire's conntrack system for zone-based coloring and filtering.
+- **`zoneutils.pm`**: Perl module (`Realtime::ZoneUtils`) in `/var/ipfire/realtime` for centralized IP-to-zone mapping with color assignment and caching, reducing lookup times for large connection tables.
+- **`realtime-functions.pl`**: Perl module (`Realtime`) in `/var/ipfire/realtime`, acting as a central dispatcher for real-time data processing, routing requests to handlers and including JavaScript for the frontend.
+- **`ipfire-realtime.js`**: Reusable JavaScript in `/srv/web/ipfire/html/include` for dynamic table rendering, supporting client-side sorting, filtering, auto-refresh, and expandable process details, adaptable for other real-time features. Built with Vanilla JavaScript for improved performance and no external dependencies.
+- **`ipfire-realtime.css`**: CSS for styling WebUI tables in `/srv/web/ipfire/html/include`, including sort indicators, responsive search fields, and flag icon alignment, customizable for future extensions.
 
 ## Installation
 
 See [USER_GUIDE.md](USER_GUIDE.md) for detailed installation instructions for administrators. In brief:
-1. Clone the repository and place files in the correct IPFire directories.
+1. Clone the repository and place files in the correct IPFire directories or use the raw files from here and copy them to the appropriate places.
 2. Ensure the `/var/ipfire/realtime` directory exists.
-3. Access the WUI to use the module.
+3. Access the WUI and use the CGI script names to use the modules.
 
 ## Extensibility
 

@@ -1,4 +1,4 @@
-# User Guide for IPFire Real-Time Connection Tracking Module
+# User Guide for IPFire Real-Time Monitoring Module
 
 This guide explains how to install and use the Real-Time Connection Tracking module for monitoring network connections in the IPFire Web User Interface (WUI). The module, under active development but fully functional, provides a user-friendly interface with real-time network monitoring, zone-based coloring, dynamic filtering, and sorting, with planned support for mobile devices.
 
@@ -45,7 +45,7 @@ The module displays a table of active connections with:
   - **Protocol**: e.g., 'TCP'
   Filters are applied server-side for efficiency and client-side as a fallback for large datasets, reducing server load.
 - **Dynamic Sorting**: Click column headers to sort by protocol, IP, port, bytes, state, or TTL (ascending or descending).
-- **Auto-Refresh**: Select refresh intervals (0, 2, 5, 10, 30, 60 seconds). Set to 0 for manual refresh.
+- **Auto-Refresh**: Select refresh intervals (2, 5, 10, 30, 60 seconds).
 - **Improved User Experience**: Dynamic tables, expandable process details, responsive search fields, and a zone legend toggle enhance usability compared to the legacy implementation.
 - **JSON API**: Access data programmatically:
       `https://<ipfire-host>/cgi-bin/connections-realtime.cgi?json=1&zone=LAN&ip=192.168.1.1`

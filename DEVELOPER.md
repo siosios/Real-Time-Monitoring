@@ -1,4 +1,4 @@
-# Developer Guide for IPFire Real-Time Connection Tracking Module
+# Developer Guide for IPFire Real-Time Monitoring Module
 
 This guide provides technical details for developers contributing to the Real-Time Connection Tracking module, which is under active development but fully functional. The module is designed for extensibility to support additional real-time monitoring features, such as hardware monitoring.
 
@@ -19,6 +19,7 @@ graph TD
     B -->|Calls| C[realtime-functions.pl]
     C -->|Loads| D[connections.pm]
     C -->|Loads| E[zoneutils.pm]
+    C -->|Future Loads| J[Future Modules<br/>(e.g., Hardware, Firewall)]
     B -->|Serves| F[ipfire-realtime.js]
     F -->|Renders| G[Dynamic Table]
     F -->|Styles| H[ipfire-realtime.css]
@@ -61,7 +62,7 @@ graph TD
 
 ## Testing
 * Test the WUI with active traffic to verify filtering, sorting, and zone visualization.
-* Use 'curl' for JSON API tests (e.g., 'curl https://<host>/cgi-bin/connections-realtime.cgi?json=1').
+* Use 'curl' for JSON API tests (e.g., `curl -u admin:<password> 'https://<ipfire-host>:444/cgi-bin/connections-realtime.cgi?json=1'`).
 * Consider 'Test::More' for Perl unit tests (to be implemented).
 
 ## Dependencies
@@ -72,4 +73,4 @@ No external dependencies; all modules (e.g., 'general-functions.pl', 'network-fu
 * Optimize 'connections.pm' filtering for very large connection datasets.
 
 ## Contributing
-Follow IPFire coding guidelines. Submit pull requests with tests. Report issues on [GitHub](https://github.com/ummeegge/Real-Time-Connection-Tracking).i
+Submit pull requests with tests. Report issues on [GitHub](https://github.com/ummeegge/Real-Time-Connection-Tracking).
