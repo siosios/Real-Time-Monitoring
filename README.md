@@ -59,7 +59,7 @@ See [DEVELOPER.md](DEVELOPER.md) for detailed development instructions, includin
 
 ## Contributing
 
-Contributions are welcome! Submit issues or pull requests on [GitHub](https://github.com/ummeegge/Real-Time-Connection-Tracking) to enhance functionality, fix bugs, or improve documentation. Follow IPFire's coding guidelines and include tests for new features.
+Contributions are welcome! Submit issues or pull requests on [GitHub](https://github.com/ummeegge/Real-Time-Monitoring) to enhance functionality, fix bugs, or improve documentation. Follow IPFire's coding guidelines and include tests for new features.
 
 ## About
 

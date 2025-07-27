@@ -14,13 +14,15 @@ This section is for administrators setting up the module on their IPFire system.
 
 ### Setup
 1. Clone the repository:
-      git clone https://github.com/ummeegge/Real-Time-Connection-Tracking.git
+      git clone https://github.com/ummeegge/Real-Time-Monitoring
 2. Copy the files to the appropriate IPFire directories, ensuring correct permissions:
    - CGI scripts: '/srv/web/ipfire/cgi-bin/connections-realtime.cgi'
    - Perl modules: '/var/ipfire/realtime/' (e.g., 'connections.pm', 'zoneutils.pm', 'realtime-functions.pl')
    - JavaScript and CSS: '/srv/web/ipfire/html/include/' (e.g., 'ipfire-realtime.js', 'ipfire-realtime.css')
 3. Ensure the '/var/ipfire/realtime' directory exists and contains the Perl modules.
 4. Restart the web server to apply changes.
+
+Future perspective: May an in- uninstaller script comes soon.
 
 ## Accessing the Module
 1. Log in to the IPFire WUI (e.g., 'https://<ipfire-host>:444').
@@ -64,4 +66,4 @@ The module displays a table of active connections with:
 - **Missing zones**: Verify zone configuration in '/var/ipfire/ethernet/settings'.
 
 ## Feedback
-Report issues or suggestions on [GitHub](https://github.com/ummeegge/Real-Time-Connection-Tracking) to help improve the module.
+Report issues or suggestions on [GitHub](https://github.com/ummeegge/Real-Time-Monitoring) to help improve the module.
