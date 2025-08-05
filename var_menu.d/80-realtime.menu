@@ -1,0 +1,19 @@
+$subrealtime->{'01.connections'} = {
+  'caption' => 'Connections',
+  'uri'     => '/cgi-bin/connections-realtime.cgi',
+  'title'   => 'Connections',
+  'enabled' => 1,
+};
+$subrealtime->{'02.firewall'} = {
+  'caption' => 'Firewall',
+  'uri'     => '/cgi-bin/firewalllogs-realtime.cgi',
+  'title'   => 'Firewall',
+  'enabled' => 1,
+};
+$subrealtime->{'03.hardware'} = {
+  'caption' => 'Hardware',
+  'uri'     => '/cgi-bin/hardware-realtime.cgi',
+  'title'   => 'Hardware',
+  'enabled' => 1,
+};
+

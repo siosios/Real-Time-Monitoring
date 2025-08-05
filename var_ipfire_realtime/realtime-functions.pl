@@ -28,6 +28,7 @@ require '/var/ipfire/location-functions.pl';
 require '/var/ipfire/realtime/connections.pm';
 require '/var/ipfire/realtime/hardware.pm';
 require '/var/ipfire/realtime/firewalllogs.pm'; # Added for firewall log support
+require '/var/ipfire/realtime/nDPId.pm';
 
 # Configure debug level: 0=none, 1=info (default), 2=full debug
 my $debug_level = 2; # Enable debugging for detailed logs
@@ -72,6 +73,7 @@ sub fetch_data {
         'connections' => \&Realtime::Connections::fetch, # Handler for connection data
         'hardware' => \&Realtime::Hardware::fetch,      # Handler for hardware data
         'firewalllogs' => \&Realtime::FirewallLogs::fetch, # Handler for firewall log data
+        'ndpid' => \&Realtime::nDPId::fetch, # Handler for nDPId data
     );
 
     # Validate the requested data type

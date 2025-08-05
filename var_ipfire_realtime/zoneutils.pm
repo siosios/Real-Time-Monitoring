@@ -4,11 +4,10 @@
 # File: zoneutils.pm
 # Purpose: Central mapping of IPs to IPFire network zones and zone colors.
 # Exports: get_zone_info($ip) -> ($zone, $color)
-# Version: 0.8                                                                 
-# Author: ummeegge                                                             
-#                                                                              
-# License: GNU General Public License, version 3 or later                      
-# Last Modified: July 21, 2025                                                 
+# Author: ummeegge
+# 
+# License: GNU GPL v3 or later
+# Last Modified: July 21, 2025  
 ###############################################################################
 
 package Realtime::ZoneUtils;
@@ -175,5 +174,4 @@ sub get_zones_hashref {
 }
 
 1;
-
 

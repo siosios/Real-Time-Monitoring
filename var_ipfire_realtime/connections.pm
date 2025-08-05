@@ -23,7 +23,7 @@ require '/var/ipfire/network-functions.pl';
 require '/var/ipfire/ids-functions.pl';
 require '/var/ipfire/location-functions.pl';
 require '/var/ipfire/header.pl';
-require '/var/ipfire/realtime/zoneutils.pm';  # <-- Jetzt zentral!
+require '/var/ipfire/realtime/zoneutils.pm';
 
 # --- Debugging configuration ---
 my $debug_level = 0; # Debug level: 0=none, 1=info (default), 2=full debug
