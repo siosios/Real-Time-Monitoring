@@ -15,15 +15,15 @@ The module uses a modular structure in '/var/ipfire/realtime':
 ### Interaction Flow
 ```mermaid
 graph TD
-    A[WebUI] -->|HTTP Request| B[connections-realtime.cgi]
-    B -->|Calls| C[realtime-functions.pl]
-    C -->|Loads| D[connections.pm]
-    C -->|Loads| E[zoneutils.pm]
-    C -->|Future Loads| J[Future Modules<br/>(e.g., Hardware, Firewall)]
-    B -->|Serves| F[ipfire-realtime.js]
-    F -->|Renders| G[Dynamic Table]
-    F -->|Styles| H[ipfire-realtime.css]
-    B -->|Uses| I[/var/ipfire/addon-langs/]
+    A[WebUI] --> B[connections-realtime.cgi]
+    B --> C[realtime-functions.pl]
+    C --> D[connections.pm]
+    C --> E[zoneutils.pm]
+    C --> J[Future Modules]
+    B --> F[ipfire-realtime.js]
+    F --> G[Dynamic Table]
+    F --> H[ipfire-realtime.css]
+    B --> I[/var/ipfire/addon-langs/]
 ```
 
 ## Technical Details
