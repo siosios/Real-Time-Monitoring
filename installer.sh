@@ -1,5 +1,4 @@
 #!/bin/bash
-
 #
 # Real-Time-Monitoring Installer/Uninstaller for IPFire
 #
@@ -44,7 +43,7 @@ declare -A FILES=(
 
 # Check if system is IPFire
 function check_ipfire() {
-    if grep -q "ipfire" /var/ipfire/fireinfo/profile 2>/dev/null; then
+    if grep -qi "ipfire" /var/ipfire/fireinfo/profile 2>/dev/null; then
         return 0
     else
         echo "This script must be run on an IPFire system only."
@@ -61,10 +60,21 @@ function show_files_ll() {
     fi
 }
 
+# Update language cache after changes
+function update_lang_cache() {
+    echo "Updating language cache..."
+    if command -v update-lang-cache >/dev/null 2>&1; then
+        update-lang-cache
+        echo "Language cache updated."
+    else
+        echo "Command update-lang-cache not found. Please update manually!"
+    fi
+    echo ""
+}
+
 # Install files and set permissions
 function install_module() {
     echo "Installation started..."
-
     mkdir -p "$CGI_DIR" "$INCLUDE_DIR" "$ADDON_LANG_DIR" "$MENU_DIR" "$REALTIME_DIR"
 
     for file in "${!FILES[@]}"; do
@@ -78,17 +88,19 @@ function install_module() {
     done
 
     # Set permissions
-    chmod 755 "$CGI_DIR"/*.cgi                 # executable scripts
-    chmod 644 "$INCLUDE_DIR/ipfire-realtime.css" "$INCLUDE_DIR/ipfire-realtime.js"  # web assets
-    chmod 004 "$ADDON_LANG_DIR/realtime-logs.de.pl" "$ADDON_LANG_DIR/realtime-logs.en.pl"  # restricted lang files
-    chmod 644 "$MENU_DIR/00-menu.main" "$MENU_DIR/80-realtime.menu"  # menu files
-    chmod 644 "$REALTIME_DIR"/*.pm "$REALTIME_DIR/realtime-functions.pl"  # perl modules
+    chmod 755 "$CGI_DIR"/*.cgi
+    chmod 644 "$INCLUDE_DIR/ipfire-realtime.css" "$INCLUDE_DIR/ipfire-realtime.js"
+    chmod 004 "$ADDON_LANG_DIR/realtime-logs.de.pl" "$ADDON_LANG_DIR/realtime-logs.en.pl"
+    chmod 644 "$MENU_DIR/00-menu.main" "$MENU_DIR/80-realtime.menu"
+    chmod 644 "$REALTIME_DIR"/*.pm "$REALTIME_DIR/realtime-functions.pl"
+
+    # Update language cache
+    update_lang_cache
 
     clear
     echo "Installation completed."
     echo ""
     echo "Installed files:"
-    # Liste alle installierten Dateien auf
     show_files_ll "${!FILES[@]}"
     echo ""
 }
@@ -96,7 +108,6 @@ function install_module() {
 # Uninstall files, backup and restore menu file
 function uninstall_module() {
     check_ipfire || return 1
-
     echo "Uninstallation started..."
 
     if [ -f "$MENU_FILE" ]; then
@@ -106,7 +117,6 @@ function uninstall_module() {
         echo "Menu file $MENU_FILE not found, no backup made."
     fi
 
-    # Dateien vor dem Entfernen erfassen (falls vorhanden)
     removed_files=()
     for file in "${!FILES[@]}"; do
         if [[ "$file" != "$MENU_FILE" ]]; then
@@ -128,6 +138,9 @@ function uninstall_module() {
         echo "No backup of $MENU_FILE found to restore."
     fi
 
+    # Update language cache
+    update_lang_cache
+
     clear
     echo "Uninstallation completed."
     echo ""
@@ -145,10 +158,13 @@ function uninstall_module() {
 # Update by uninstall then install
 function update_module() {
     check_ipfire || return 1
-
     echo "Update started..."
     uninstall_module
     install_module
+
+    # Update language cache again (final consistency)
+    update_lang_cache
+
     clear
     echo "Update completed."
     echo ""
