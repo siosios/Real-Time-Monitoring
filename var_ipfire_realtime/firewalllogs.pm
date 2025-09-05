@@ -1,13 +1,13 @@
 #!/usr/bin/perl
 ###############################################################################
 # File/path: /var/ipfire/realtime/firewalllogs.pm                             #
-# Purpose: Aggregates firewall log entries by IP, port, or country for         #
-#          IPFire Web UI, returning grouped data with zone colors and flags.   #
-#          Also fetches raw logs for real-time display and search.             #
-# Version: 0.9.3                                                              #
+# Purpose: Aggregates firewall log entries by IP, port, or country for        #
+#          IPFire Web UI, returning grouped data with zone colors and flags.  #
+#          Also fetches raw logs for real-time display and search.            #
+# Version: 0.9.4                                                              #
 # Author: ummeegge                                                            #
 # License: GNU General Public License, version 3 or later                     #
-# Last Modified: August 4, 2025                                               #
+# Last Modified: September 4, 2025                                            #
 ###############################################################################
 
 package Realtime::FirewallLogs;
@@ -189,8 +189,8 @@ sub fetch_raw {
     my $daystr = $day < 10 ? " $day" : "$day";
     foreach my $line (@lines) {
         $line_count++;
-        if ($line =~ /^(\w+\s+\d+\s+\d\d:\d\d:\d\d)\s+ipfire-prime\s+kernel:\s+(\w+)\s+IN=(\w+)\s+OUT=(\w*)\s+.*SRC=([\d.]+)\s+DST=([\d.]+)\s+.*PROTO=(\w+)\s*(?:SPT=(\d+))?\s*(?:DPT=(\d+))?/) {
-            my ($timestamp, $action, $in, $out, $src_ip, $dst_ip, $protocol, $src_port, $dst_port) = ($1, $2, $3, $4, $5, $6, $7, $8, $9);
+        if ($line =~ /^(\w+\s+\d+\s+\d\d:\d\d:\d\d)\s+([^\s]+)\s+kernel:\s+(\w+)\s+IN=(\w+)\s+OUT=(\w*)\s+.*SRC=([\d.]+)\s+DST=([\d.]+)\s+.*PROTO=(\w+)\s*(?:SPT=(\d+))?\s*(?:DPT=(\d+))?/) {
+            my ($timestamp, $hostname, $action, $in, $out, $src_ip, $dst_ip, $protocol, $src_port, $dst_port) = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);
             $matched_count++;
             debug(2, "Matched log line: $line");
             if (!$is_search && defined $monthstr && defined $daystr && $monthstr ne '' && $daystr ne '' && $line !~ /^$monthstr $daystr\s+\d\d:\d\d:\d\d/) {
@@ -300,7 +300,7 @@ sub fetch_filters {
     my $monthstr = $shortmonths[$month];
     my $daystr = $day < 10 ? " $day" : "$day";
     while (my $line = <$fh>) {
-        next unless $line =~ /^(\w+\s+\d+\s+\d\d:\d\d:\d\d)\s+ipfire-prime\s+kernel:/;
+        next unless $line =~ /^(\w+\s+\d+\s+\d\d:\d\d:\d\d)\s+([^\s]+)\s+kernel:/;
         next if defined $monthstr && defined $daystr && $monthstr ne '' && $daystr ne '' && $line !~ /^$monthstr $daystr\s+\d\d:\d\d:\d\d/;
         if (my ($in) = $line =~ /IN=(\w+)/) {
             $interfaces{$in} = 1;
