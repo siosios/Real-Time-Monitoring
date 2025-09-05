@@ -1,52 +1,18 @@
 /* Real-Time Tables (Connections, Firewalllogs etc.) */
 /* File/path: /srv/web/ipfire/html/include/ipfire-realtime.css */
-/* Version: 1.0.5 */
-/* Last Modified: September 4, 2025 */
-
-:root {
-    --primary-color: #ff2e52; /* IPFire primary color */
-    --primary-hover: #e02848; /* Darker hover */
-    --drop-bg: #993333; /* DROP action background */
-    --accept-bg: #339933; /* ACCEPT action background */
-    --text-light: #ffffff; /* White text for colored cells */
-    --text-dark: #333333; /* Dark text for light backgrounds */
-    --bg-light-even: #f7f7f7; /* Light grey for even rows */
-    --bg-light-odd: #ffffff; /* White for odd rows */
-    --bg-dark-even: #2a2a2a; /* Dark grey for even rows */
-    --bg-dark-odd: #1f1f1f; /* Darker grey for odd rows */
-    --modal-bg: #ffffff; /* Modal background */
-    --modal-shadow: rgba(0, 0, 0, 0.3);
-    --modal-border: #ccc;
-    --modal-dark-bg: #2a2a2a; /* Modal background for dark theme */
-}
-
-/* Dark theme support */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --modal-bg: var(--modal-dark-bg);
-        --bg-light-even: var(--bg-dark-even);
-        --bg-light-odd: var(--bg-dark-odd);
-        --text-dark: #ffffff;
-    }
-}
 
 .tbl, .tbl thead, .tbl tbody, .bigbox {
     width: 100% !important;
-    border-collapse: collapse;
 }
-
 .tbl td, .tbl th {
     text-align: center;
-    padding: 6px 10px; /* Slightly increased padding */
+    padding: 4px 8px; /* Increased padding for better readability */
     white-space: nowrap;
-    font-size: 1.1em;
-    transition: background-color 0.2s ease; /* Smooth color transitions */
+    font-size: 1.1em; /* Slightly larger font */
 }
-
 .tbl td:first-child {
     text-align: left;
 }
-
 .bigbox {
     width: 100%;
     margin: 0;
@@ -58,86 +24,60 @@
     display: table-row-group !important;
     visibility: visible !important;
 }
-
 #grouped_table td, #raw_logs_table td {
     visibility: visible !important;
-    color: var(--text-light) !important; /* Force white text for colored cells */
+    color: #fff !important; /* Force white text for colored cells */
 }
 
 /* Zebra striping for better readability */
 .tbl tbody tr:nth-child(even) {
-    background: var(--bg-light-even);
+    background: #f7f7f7; /* Light grey for even rows */
 }
-
 .tbl tbody tr:nth-child(odd) {
-    background: var(--bg-light-odd);
+    background: #ffffff; /* White for odd rows */
 }
 
 /* Column widths for raw logs table */
 #raw_logs_table th:nth-child(1), #raw_logs_table td:nth-child(1) { /* Timestamp */
-    min-width: 150px;
     width: 20%;
 }
-
 #raw_logs_table th:nth-child(2), #raw_logs_table td:nth-child(2) { /* Action */
-    min-width: 100px;
     width: 15%;
 }
-
 #raw_logs_table th:nth-child(3), #raw_logs_table td:nth-child(3), /* IN */
 #raw_logs_table th:nth-child(4), #raw_logs_table td:nth-child(4) { /* OUT */
-    min-width: 60px;
     width: 8%;
 }
-
 #raw_logs_table th:nth-child(5), #raw_logs_table td:nth-child(5), /* SRC */
 #raw_logs_table th:nth-child(6), #raw_logs_table td:nth-child(6) { /* DST */
-    min-width: 100px;
     width: 12%;
 }
-
 #raw_logs_table th:nth-child(7), #raw_logs_table td:nth-child(7) { /* Protocol */
-    min-width: 80px;
     width: 10%;
 }
-
 #raw_logs_table th:nth-child(8), #raw_logs_table td:nth-child(8), /* SPT */
 #raw_logs_table th:nth-child(9), #raw_logs_table td:nth-child(9) { /* DPT */
-    min-width: 60px;
     width: 8%;
 }
-
 #raw_logs_table th:nth-child(10), #raw_logs_table td:nth-child(10) { /* Flag */
-    min-width: 50px;
     width: 5%;
 }
-
 #raw_logs_table th:nth-child(11), #raw_logs_table td:nth-child(11) { /* Details */
-    min-width: 80px;
     width: 10%;
 }
 
 /* Style for Details button */
 .details-btn {
-    background: var(--primary-color);
-    color: var(--text-light);
+    background: #ff2e52; /* IPFire primary color */
+    color: #ffffff;
     border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
+    padding: 4px 8px;
+    border-radius: 3px;
     cursor: pointer;
     font-size: 0.9em;
-    transition: background-color 0.2s ease;
 }
-
-.details-btn:hover, .details-btn:focus {
-    background: var(--primary-hover);
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
-}
-
-.details-btn:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
+.details-btn:hover {
+    background: #e02848; /* Slightly darker on hover */
 }
 
 /* Table sorting header icons & cursor */
@@ -146,159 +86,53 @@ th[data-sort] {
     position: relative;
     padding-right: 20px;
 }
-
 th[data-sort].sort-up::after {
     content: "\2191";
     position: absolute;
-    right: 8px;
+    right: 5px;
     font-size: 16px;
-    color: var(--text-light);
-    transition: opacity 0.2s ease;
+    color: #ffffff;
 }
-
 th[data-sort].sort-down::after {
     content: "\2193";
     position: absolute;
-    right: 8px;
+    right: 5px;
     font-size: 16px;
-    color: var(--text-light);
-    transition: opacity 0.2s ease;
+    color: #ffffff;
 }
-
 th[data-sort].sort-none::after {
     content: "\2022";
     position: absolute;
-    right: 8px;
+    right: 5px;
     font-size: 16px;
-    color: var(--text-light);
-    opacity: 0.5;
-    transition: opacity 0.2s ease;
+    color: #ffffff;
 }
-
-th[data-sort]:hover::after, th[data-sort]:focus::after {
-    opacity: 1;
-}
-
-th[data-sort]:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
+th[data-sort]:hover::after {
+    color: #ffffff;
 }
 
 /* White links on colored table cells */
 .tbl td a, .tbl td a:visited, .tbl td a:active {
-    color: var(--text-light) !important;
+    color: #fff !important;
     text-decoration: underline;
 }
 
 /* Style for country flag icons */
 .tbl td img[alt][src*="/images/flags/"] {
     vertical-align: middle;
-    margin: 0 4px;
-    width: 24px; /* Slightly larger for clarity */
-    height: 16px;
+    margin: 0 2px;
+    width: 20px; /* Fixed size for consistency */
+    height: 14px;
 }
 
 /* Search fields and error messages */
 .search_fields {
     display: none;
-    margin-top: 10px;
-    padding: 10px;
-    background: var(--bg-light-even);
-    border-radius: 4px;
 }
-
 #error_msg {
-    color: var(--primary-color);
+    color: red;
     margin-top: 10px;
     display: none;
-    font-weight: bold;
-}
-
-/* Modal styling */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent backdrop */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-.modal-content {
-    background: var(--modal-bg);
-    border: 1px solid var(--modal-border);
-    border-radius: 8px;
-    padding: 20px;
-    max-width: 600px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-shadow: 0 4px 8px var(--modal-shadow);
-    animation: slideIn 0.3s ease-in-out;
-}
-
-.modal-content h2 {
-    margin-top: 0;
-    color: var(--text-dark);
-    font-size: 1.5em;
-}
-
-.modal-content table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.modal-content th, .modal-content td {
-    padding: 8px;
-    border: 1px solid var(--modal-border);
-    text-align: left;
-}
-
-.modal-content button {
-    background: var(--primary-color);
-    color: var(--text-light);
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.2s ease;
-}
-
-.modal-content button:hover, .modal-content button:focus {
-    background: var(--primary-hover);
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideIn {
-    from { transform: translateY(-20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-/* Loading placeholder */
-@keyframes pulse {
-    0% { background-color: var(--bg-light-even); }
-    50% { background-color: var(--bg-light-odd); }
-    100% { background-color: var(--bg-light-even); }
-}
-
-.loading-placeholder {
-    animation: pulse 1.5s infinite;
-    height: 20px;
-    width: 100%;
-    border-radius: 4px;
 }
 
 /* Tooltip styling */
@@ -306,26 +140,23 @@ th[data-sort]:focus {
     position: relative;
     display: inline-block;
     cursor: help;
-    color: var(--primary-color);
+    color: #ff2e52; /* IPFire primary color */
 }
-
-.tooltip:hover:after, .tooltip:focus:after {
+.tooltip:hover:after {
     content: attr(title);
     position: absolute;
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--text-dark);
-    color: var(--text-light);
-    padding: 6px 12px;
-    border-radius: 4px;
+    background: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
     white-space: pre-wrap;
     z-index: 1000;
     min-width: 150px;
     text-align: left;
     font-size: 0.9em;
-    opacity: 0;
-    animation: fadeIn 0.2s ease-in forwards;
 }
 
 /* Responsive handling */
@@ -335,30 +166,12 @@ th[data-sort]:focus {
         display: block;
         max-width: 100vw;
     }
-
     .tbl td, .tbl th {
         font-size: 0.9em;
-        padding: 4px 6px;
+        padding: 2px 4px;
     }
-
-    .modal-content {
-        width: 95%;
-        max-height: 90vh;
-    }
-
     .tooltip:after {
-        min-width: 120px;
+        min-width: 100px;
         font-size: 0.8em;
-        left: 0;
-        transform: none;
-    }
-
-    /* Adjust column widths for smaller screens */
-    #raw_logs_table th:nth-child(1), #raw_logs_table td:nth-child(1) { /* Timestamp */
-        min-width: 120px;
-    }
-
-    #raw_logs_table th:nth-child(2), #raw_logs_table td:nth-child(2) { /* Action */
-        min-width: 80px;
     }
 }
