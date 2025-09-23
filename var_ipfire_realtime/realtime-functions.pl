@@ -28,7 +28,7 @@ require '/var/ipfire/location-functions.pl';
 require '/var/ipfire/realtime/connections.pm';
 require '/var/ipfire/realtime/hardware.pm';
 require '/var/ipfire/realtime/firewalllogs.pm'; # Added for firewall log support
-require '/var/ipfire/realtime/nDPId.pm';
+#require '/var/ipfire/realtime/nDPId.pm';
 
 # Configure debug level: 0=none, 1=info (default), 2=full debug
 my $debug_level = 2; # Enable debugging for detailed logs
@@ -93,3 +93,4 @@ sub fetch_data {
 }
 
 1; # End of package
+
