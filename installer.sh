@@ -22,7 +22,7 @@ INCLUDE_DIR="/srv/web/ipfire/html/include"
 ADDON_LANG_DIR="/var/ipfire/addon-lang"
 MENU_DIR="/var/ipfire/menu.d"
 MENU_FILE="$MENU_DIR/00-menu.main"
-MENU_BACKUP="$MENU_DIR/00-menu.main.bak"
+MENU_BACKUP="$MENU_DIR/00-menu.main-bck-realtime"
 REALTIME_DIR="/var/ipfire/realtime"
 
 declare -A FILES=(
@@ -39,6 +39,7 @@ declare -A FILES=(
     ["$REALTIME_DIR/realtime-functions.pl"]="$BASE_URL/var_ipfire_realtime/realtime-functions.pl"
     ["$REALTIME_DIR/zoneutils.pm"]="$BASE_URL/var_ipfire_realtime/zoneutils.pm"
     ["$MENU_DIR/80-realtime.menu"]="$BASE_URL/var_menu.d/80-realtime.menu"
+    ["$MENU_FILE"]="$BASE_URL/var_menu.d/00-menu.main"
 )
 
 # Check if system is IPFire
@@ -72,10 +73,17 @@ function update_lang_cache() {
     echo ""
 }
 
-# Install files and set permissions
+# Install files
 function install_module() {
     echo "Installation started..."
     mkdir -p "$CGI_DIR" "$INCLUDE_DIR" "$ADDON_LANG_DIR" "$MENU_DIR" "$REALTIME_DIR"
+
+    # Backup original menu file with suffix -bck-realtime, only if backup missing
+    if [ -f "$MENU_FILE" ] && [ ! -f "$MENU_BACKUP" ]; then
+        echo "Backing up original $MENU_FILE to $MENU_BACKUP"
+        cp "$MENU_FILE" "$MENU_BACKUP"
+        chmod 644 "$MENU_BACKUP"
+    fi
 
     for file in "${!FILES[@]}"; do
         url="${FILES[$file]}"
@@ -87,14 +95,13 @@ function install_module() {
         fi
     done
 
-    # Set permissions
+    # Set correct permissions
     chmod 755 "$CGI_DIR"/*.cgi
     chmod 644 "$INCLUDE_DIR/ipfire-realtime.css" "$INCLUDE_DIR/ipfire-realtime.js"
-    chmod 004 "$ADDON_LANG_DIR/realtime-logs.de.pl" "$ADDON_LANG_DIR/realtime-logs.en.pl"
+    chmod 444 "$ADDON_LANG_DIR/realtime-logs.de.pl" "$ADDON_LANG_DIR/realtime-logs.en.pl"
     chmod 644 "$MENU_DIR/00-menu.main" "$MENU_DIR/80-realtime.menu"
     chmod 644 "$REALTIME_DIR"/*.pm "$REALTIME_DIR/realtime-functions.pl"
 
-    # Update language cache
     update_lang_cache
 
     clear
@@ -110,11 +117,14 @@ function uninstall_module() {
     check_ipfire || return 1
     echo "Uninstallation started..."
 
-    if [ -f "$MENU_FILE" ]; then
-        echo "Backing up $MENU_FILE to $MENU_BACKUP"
-        cp "$MENU_FILE" "$MENU_BACKUP"
+    # Restore original menu file backup if exists
+    if [ -f "$MENU_BACKUP" ]; then
+        echo "Restoring original $MENU_FILE from backup $MENU_BACKUP"
+        cp "$MENU_BACKUP" "$MENU_FILE"
+        chmod 644 "$MENU_FILE"
+        rm -f "$MENU_BACKUP"
     else
-        echo "Menu file $MENU_FILE not found, no backup made."
+        echo "No backup file $MENU_BACKUP found, original menu not restored."
     fi
 
     removed_files=()
@@ -130,15 +140,6 @@ function uninstall_module() {
 
     rmdir --ignore-fail-on-non-empty "$REALTIME_DIR"
 
-    if [ -f "$MENU_BACKUP" ]; then
-        echo "Restoring $MENU_FILE from backup."
-        cp "$MENU_BACKUP" "$MENU_FILE"
-        rm -f "$MENU_BACKUP"
-    else
-        echo "No backup of $MENU_FILE found to restore."
-    fi
-
-    # Update language cache
     update_lang_cache
 
     clear
@@ -161,10 +162,7 @@ function update_module() {
     echo "Update started..."
     uninstall_module
     install_module
-
-    # Update language cache again (final consistency)
     update_lang_cache
-
     clear
     echo "Update completed."
     echo ""
@@ -189,24 +187,12 @@ while true; do
     show_menu
     read -r choice
     case "$choice" in
-        1)
-            install_module
-            ;;
-        2)
-            uninstall_module
-            ;;
-        3)
-            update_module
-            ;;
-        4)
-            echo "Exiting."
-            exit 0
-            ;;
-        *)
-            echo "Invalid input. Please enter a number from 1 to 4."
-            ;;
+        1) install_module ;;
+        2) uninstall_module ;;
+        3) update_module ;;
+        4) echo "Exiting."; exit 0 ;;
+        *) echo "Invalid input. Please enter a number from 1 to 4." ;;
     esac
 done
 
 # EOF
-
